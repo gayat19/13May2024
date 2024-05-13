@@ -1,0 +1,30 @@
+MEAN
+MERN
+
+npm init
+node index.js
+use the port for seeing result in browser
+
+
+new react application
+npx create-react-app my-app --template typescript
+
+
+npm i bootstrap@5.3.3 --save
+
+Virtual DOM
+
+Displaying the data -> One way and 2 way
+Handling events -> click, change, select
+Pass data between screens(Components)
+    parameters
+    Hooks
+    Redux
+Handle API Calls
+    GET/PUT/POST/DELETE methods
+Routing
+    How to load another component
+Styling
+Authentication
+Deployment
+Debugging

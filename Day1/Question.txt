@@ -1,0 +1,9 @@
+Create a new react app with typescript - request-tracker-app
+
+Add a new model. -> Employee(id, name, age, phone, role)
+
+Create a new component Employee
+
+Display the employee details
+
+Add some style
