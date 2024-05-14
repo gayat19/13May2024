@@ -1,0 +1,5 @@
+Create a component AddEmployee
+Add input controls for all the properties and allow binding with object
+Hint- Use useState(single attribute or whole object- your choice)
+
+Just display the object below(Just for learn purpose)

@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import First from './First';
-import Product from './ProductHandling/Product';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
@@ -15,7 +13,7 @@ const root = ReactDOM.createRoot(
 
  root.render(
   <React.StrictMode>
-    <Product/>
+    <App/>
   </React.StrictMode>
 );
 

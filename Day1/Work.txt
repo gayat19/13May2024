@@ -28,3 +28,125 @@ Styling
 Authentication
 Deployment
 Debugging
+
+
+---------------------------
+const Product=()=>{
+let name="Ramu";
+
+return(
+    <section>
+        {/* <!--Interpollation--> */}
+        <h1> Hello from {name}</h1> 
+    </section>
+)
+}
+
+export default Product;
+
+
+export class ProductModel{
+    // id:number = 0;
+    // name:string = "";
+    // price:number=0.0;
+    // quantity:number=0;
+    // picture:string="";
+    constructor(
+       public id:number = 0,
+    public name:string = "",
+    public price:number=0.0,
+    public quantity:number=0,
+   public  picture:string=""
+    ){
+
+    }
+}
+
+
+import { ProductModel } from "./ProductModel";
+
+const Product=()=>{
+let name="Ramu";
+let prod = new ProductModel(101,"Pencil",5.5,10,"");
+
+
+return(
+    <section>
+        {/* <!--Interpollation--> */}
+        <h1> Hello from {prod.name}</h1> 
+    </section>
+)
+}
+
+export default Product;
+
+import { ProductModel } from "./ProductModel";
+import './Product.css';
+
+const Product=()=>{
+let name="Ramu";
+let prod = new ProductModel(101,"Pencil",5.5,10,"");
+
+
+return(
+    <section>
+        {/* <!--Interpollation--> */}
+        <div className="product">
+            Product Id:{prod.id}
+            <br/>
+            Product Name: {prod.name}
+            <br/>
+            Product Price: ${prod.price}
+            <br/>
+            Product stock in hand: {prod.quantity}
+           
+        </div>
+    </section>
+)
+}
+
+export default Product;
+
+
+.product{
+    background-color: aquamarine;
+    font-family: 'monotype corsiva';
+    color: olive;
+    width: 300px;
+}
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import First from './First';
+import Product from './ProductHandling/Product';
+import 'bootstrap/dist/css/bootstrap.css';
+
+
+
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+
+ root.render(
+  <React.StrictMode>
+    <Product/>
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+----------------------------------------------------------------------
+Create a new react app with typescript - request-tracker-app
+
+Add a new model. -> Employee(id, name, age, phone, role)
+
+Create a new component Employee
+
+Display the employee details
+
+Add some style
