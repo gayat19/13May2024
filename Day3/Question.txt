@@ -1,0 +1,5 @@
+Create a component structure that will display the blog posts 
+use the url bellow to fetch the data and populate the array
+Iterate to display all the posts
+
+https://jsonplaceholder.typicode.com/posts

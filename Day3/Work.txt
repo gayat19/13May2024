@@ -1,0 +1,158 @@
+Inter component communiocation
+  Parent to child
+Iteration using map
+
+Call API - GET
+------------------------------------------------------------
+
+export class ProductModel{
+    constructor(
+       public id:number = 0,
+    public title:string = "",
+    public price:number=0.0,
+    public stock:number=0,
+   public  picture:string=""
+    ){}
+
+}
+import { useState } from "react";
+import { ProductModel } from "./ProductModel";
+
+
+const Product=(props:any)=>{
+
+return(
+    <section>
+        <div className="alert alert-success">
+            <h2>Product</h2>
+            Product Id:{props.myProduct.id}
+            <br/>
+            Product Name: {props.myProduct.title}
+            <br/>
+            Product Price: ${props.myProduct.price}
+            <br/>
+            Product stock in hand: {props.myProduct.stock}
+        </div>
+    </section>
+)
+}
+
+export default Product;
+
+import { useState } from "react"
+import Product from "./Product"
+import { ProductModel } from "./ProductModel"
+
+export default function Products(){
+    let prods = [
+        new ProductModel(101,"Pencil",5,10),
+        new ProductModel(102,"Eraser",3,15),
+        new ProductModel(103,"Sharpner",25,7)
+    ]
+    const [productsArray,setProductsArray] = useState([new ProductModel()]);
+    const getData=()=>{
+        fetch("https://dummyjson.com/products")
+        .then((data)=>{
+           return data.json()
+        }).then(d=>{
+            setProductsArray(d.products as ProductModel[]);
+            //console.log(productsArray)
+        })
+    }
+    return(
+        <div>
+            <h1>Product Listing</h1>
+            <button onClick={getData} className="btn btn-success">Get Product Data</button>
+            <hr/>
+            {
+                productsArray.map((p,i)=>{
+                    return(<div key={i}>
+                       <Product myProduct={p}/>
+                    </div>)
+                })
+            }
+        </div>
+    )
+}
+import { useState } from "react";
+import { ProductModel } from "./ProductModel";
+import './AddProduct.css';
+
+function AddProduct(){
+   
+    const [product,setProduct] = useState(new ProductModel());
+    var addProduct =()=>{
+        console.log(product);
+    }
+    return(
+
+        <div className="alert alert-primary addprod">
+            <h1>Add New Product</h1>
+            <hr/>
+            <label className="form-control">Product Name</label>
+            <input className="form-control" type="text" onChange={
+                (e)=>{
+                    setProduct(prevState=>({...prevState,title:e.target.value}))
+                }
+            }/>
+             <label className="form-control">Product Price</label>
+            <input className="form-control" type="text" onChange={
+                (e)=>{
+                    setProduct(prevState=>({...prevState,price:Number(e.target.value)}))
+                }
+            }/>
+             <label className="form-control">Product Quantity</label>
+            <input className="form-control" type="text" onChange={
+                (e)=>{
+                    setProduct(prevState=>({...prevState,stock:Number(e.target.value)}))
+                }
+            }/>
+           
+            <button className="btn btn-primary" onClick={addProduct}>Add Product</button>
+        </div>
+    );
+}
+export default AddProduct;
+
+import AddProduct from "./AddProduct";
+
+import { ProductModel } from "./ProductModel";
+import Products from "./Products";
+
+function ProductHome(){
+
+    return(
+    <section className="alert alert-warning">
+        <h1>Welcome to our shop</h1>
+        <div className="row">
+            <div className="col-sm-6 alert alert-success" >
+                <AddProduct/>
+            </div>
+            <div className="col-sm-6 alert alert-danger" >
+                <Products/>
+            </div>
+        </div>
+    </section>);
+}
+
+export default ProductHome;
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+import ProductHome from './ProductHandling/ProductHome';
+
+function App() {
+  return (
+    <div className="App">
+        <h1>Hello world!!!</h1>
+        <hr/>
+        <ProductHome/>
+        <hr/>
+
+
+    </div>
+  );
+}
+
+export default App;
+  

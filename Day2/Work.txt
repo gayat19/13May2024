@@ -1,0 +1,259 @@
+Hooks
+  useState -  Creates memory for every component -. Managed by that component
+  state, method to change the state
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.css';
+
+
+
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+
+ root.render(
+  <React.StrictMode>
+    <App/>
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+-------------------------------------------------------
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+import Product from './ProductHandling/Product';
+
+function App() {
+  return (
+    <div className="App">
+        <h1>Hello world!!!</h1>
+        <hr/>
+        <Product/>
+    </div>
+  );
+}
+
+export default App;
+  ---------------------------------------------------------------
+import { ProductModel } from "./ProductModel";
+
+
+const Product=()=>{
+let name="Ramu";
+let prod = new ProductModel(101,"Pencil",5.5,10,"");
+const changeClick =()=>{
+    alert("You clicked change");
+    prod.name = "New Name";
+    console.log(prod);
+}
+
+return(
+    <section>
+        {/* <!--Interpollation--> */}
+        <div className="alert alert-success">
+            Product Id:{prod.id}
+            <br/>
+            Product Name: {prod.name}
+            <br/>
+            Product Price: ${prod.price}
+            <br/>
+            Product stock in hand: {prod.quantity}
+        </div>
+        <button className="btn btn-success" onClick={changeClick}>Change</button>
+    </section>
+)
+}
+
+export default Product;
+----------------------------------------------
+
+export class ProductModel{
+    // id:number = 0;
+    // name:string = "";
+    // price:number=0.0;
+    // quantity:number=0;
+    // picture:string="";
+    constructor(
+       public id:number = 0,
+    public name:string = "",
+    public price:number=0.0,
+    public quantity:number=0,
+   public  picture:string=""
+    ){
+
+    }
+}
+
+-----------------------------------------------
+import { useState } from "react";
+import { ProductModel } from "./ProductModel";
+
+
+const Product=()=>{
+//let name="Ramu";
+var [name,setName] = useState("Pencil");//hook to manage change in the value
+var [price,setPrice] = useState(5.5);
+var [quantity,setQuantity] = useState(10);
+let prod = new ProductModel(101,name,price,quantity,"");
+
+const changeClick =()=>{
+    alert("You clicked change");
+   // prod.name = "New Name";
+    console.log(prod);
+}
+const changeName=(evntArg:any)=>{
+    setName(evntArg.target.value);
+    console.log(prod.name)
+}
+const changePrice=(evntArgs:any)=>{
+    setPrice(evntArgs.target.value)
+}
+return(
+    <section>
+        {/* <!--Interpollation--> */}
+        {/* Add a textbox and change product name Hint - onChange */}
+        <input value={name} type="text" onChange={changeName}/>
+        <input value={price} type="text" onChange={changePrice}/>
+        <input value={quantity} type="number" onChange={
+            (eventArgs)=>setQuantity(Number(eventArgs.target.value))
+        }/>
+        <div className="alert alert-success">
+            Product Id:{prod.id}
+            <br/>
+            Product Name: {prod.name}
+            <br/>
+            Product Price: ${prod.price}
+            <br/>
+            Product stock in hand: {prod.quantity}
+        </div>
+        <button className="btn btn-success" onClick={changeClick}>Change</button>
+    </section>
+)
+}
+
+export default Product;
+--------------------------------------------------
+import { useState } from "react";
+import { ProductModel } from "./ProductModel";
+
+
+const Product=()=>{
+//let name="Ramu";
+var [name,setName] = useState("Pencil");//hook to manage change in the value
+var [price,setPrice] = useState(5.5);
+var [quantity,setQuantity] = useState(10);
+let prod = new ProductModel(101,name,price,quantity,"");
+let [myProduct,setMyProduct] = useState(new ProductModel(0,"rrr"));
+
+const changeClick =()=>{
+    alert("You clicked change");
+   // prod.name = "New Name";
+    console.log(prod);
+}
+const changeName=(evntArg:any)=>{
+    setName(evntArg.target.value);
+    console.log(prod.name)
+}
+const changePrice=(evntArgs:any)=>{
+    setPrice(evntArgs.target.value)
+}
+const changeProduct =(e:any)=>{
+    const {name,value} = e.target;
+    setMyProduct(prevState=>({...prevState,name:value}));
+}
+return(
+    <section>
+        {/* <!--Interpollation--> */}
+        {/* Add a textbox and change product name Hint - onChange */}
+        <input value={name} type="text" onChange={changeName}/>
+        <input value={price} type="text" onChange={changePrice}/>
+        <input value={quantity} type="number" onChange={
+           (eventArgs)=>setQuantity(Number(eventArgs.target.value))
+        }/>
+         <div className="alert alert-success">
+            <h2>MyProduct</h2>
+            <hr/>
+            <input value={myProduct.name} type="text" onChange={changeProduct}/>
+         <input value={myProduct.price} type="text" onChange={
+             (e)=>setMyProduct(prevState=>({...prevState,price:Number(e.target.value)}))
+         }/>
+        {/*<input value={quantity} type="number" onChange={
+            (eventArgs)=>)
+        }/> */}
+        <hr/>
+            
+            Product Id:{myProduct.id}
+            <br/>
+            Product Name: {myProduct.name}
+            <br/>
+            Product Price: ${myProduct.price}
+            <br/>
+            Product stock in hand: {myProduct.quantity}
+        </div>
+        <div className="alert alert-success">
+            <h2>Product</h2>
+            Product Id:{prod.id}
+            <br/>
+            Product Name: {prod.name}
+            <br/>
+            Product Price: ${prod.price}
+            <br/>
+            Product stock in hand: {prod.quantity}
+        </div>
+        <button className="btn btn-success" onClick={changeClick}>Change</button>
+    </section>
+)
+}
+
+export default Product;
+--------------------------------------------------------
+function SampleArray(){
+    var arr1 = [1,2,3];
+    var arr2 = [9,8,7];
+    const buttonClick=()=>{
+        let arr3 = [...arr1,...arr2]
+        console.log(arr3)
+    }
+return (
+    <article>
+        <h1>Sample Array</h1>
+        <button onClick={buttonClick} className="btn btn-primary">Show Array</button>
+    </article>
+)
+}
+export default SampleArray;
+
+function SampleArray(){
+    var arr1 = [1,2,3];
+    var arr2 = [9,8,7];
+    const sum=(n1:number,n2:number,n3:number)=>n1+n2+n3;
+    const buttonClick=()=>{
+        let arr3 = [...arr1,...arr2]
+        const[num1,num2,num3] = arr2;//spread
+      const [n1,...nums]=arr1;//spread and rest
+      console.log(nums)
+    }
+   
+return (
+    <article>
+        <h1>Sample Array</h1>
+        <button onClick={buttonClick} className="btn btn-primary">Show Array</button>
+    </article>
+)
+}
+export default SampleArray;
+----------------------------------------------------
+
+Create a component AddEmployee
+Add input controls for all the properties and allow binding with object
+Hint- Use useState(single attribute or whole object- your choice)
+
+Just display the object below(Just for learn purpose)

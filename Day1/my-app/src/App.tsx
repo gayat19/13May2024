@@ -1,17 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Product from './ProductHandling/Product';
-import SampleArray from './SampleArray/SampleArray';
+import ProductHome from './ProductHandling/ProductHome';
 
 function App() {
   return (
     <div className="App">
         <h1>Hello world!!!</h1>
         <hr/>
-        <SampleArray/>
+        <ProductHome/>
         <hr/>
-        <Product/>
+
 
     </div>
   );
