@@ -1,0 +1,6 @@
+Redux -> How to handle data between components that are not related
+store - list the objects which needs state change to be triggered from various components
+slice - one for every object that need to be state monitored - initial state of the object and the methods to modify the state
+provider - prove the store to all components that need to modify/read the object
+dispatcher - reference to a method that will modify the state
+useSelector - a hook that triggers change in display when the state of object modified by the dispatch reducer changes

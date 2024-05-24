@@ -1,0 +1,240 @@
+SPA - Single page application
+react-router
+react-router-dom
+
+
+npm i react-router
+
+npm i react-router-dom
+
+---------------------------------------------------------------------
+Home.tsx
+----------------------------------------------------------------
+
+export function Home(){
+    return(
+        <div>
+            <h1>Home</h1>
+        </div>
+    )
+}
+---------------------------------------------------------------------
+PrivateRoute.tsx
+----------------------------------------------------------------
+import { useEffect } from "react";
+import { Navigate, Outlet } from "react-router";
+
+export function PrivateRoute(){
+    var isLoggedIn = sessionStorage.getItem("un")?true:false;
+    useEffect(()=>{
+        if(!isLoggedIn)
+            sessionStorage.setItem("route","/products")
+    },[])
+    return(
+            isLoggedIn?<Outlet/>:<Navigate to="./login"/>
+    )
+}
+---------------------------------------------------------------------
+NotFound.tsx
+----------------------------------------------------------------
+export function NotFound(){
+    return(
+        <div>
+            <h1>
+               <img src='error.png'/>
+            </h1>
+        </div>
+    )
+}
+---------------------------------------------------------------------
+Menu.tsx
+----------------------------------------------------------------
+import { Link, Outlet } from "react-router-dom";
+
+export function Menu(){
+    return(
+        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <div className="container-fluid">
+                <a className="navbar-brand" href="#">Navbar</a>
+               
+                <div className="collapse navbar-collapse" id="navbarNav">
+                <ul className="navbar-nav">
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/login">Login</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/local">Local Data</Link>
+                    </li>
+                    
+                </ul>
+                </div>
+            </div>
+    </nav>
+    )
+}
+---------------------------------------------------------------------
+App.tsx
+---------------------------------------------------------------------
+
+import { BrowserRouter, Link, Outlet, Route, Routes } from 'react-router-dom';
+import './App.css';
+import Login from './Login/Login';
+import ProductDataJson from './ProductModule/ProductDataJson';
+import { Menu } from './Menu';
+import Parent from './ProductModule/Parent';
+import { NotFound } from './NotFound';
+import { Products } from './ProductModule/Products';
+import { Home } from './Home';
+import { PrivateRoute } from './PrivateRoute';
+
+function App() {
+  return (
+    <div>
+      <BrowserRouter>
+      <Menu/>
+      <Routes>
+          <Route path='/' element={<Home/>}/>
+          {/* or */}
+          {/* <Route index element={<Products/>}/> */}
+          <Route path='login' element={<Login/>}/>
+          <Route path='local' element={<ProductDataJson/>}/>
+          <Route path='parent' element={<Parent/>}/>
+          <Route element={<PrivateRoute/>}>
+              <Route path='products' element={<Products/>}/>
+          </Route>
+          
+          {/* Wildcard route */}
+          <Route path='*' element={<NotFound/>}/>
+      </Routes>
+    </BrowserRouter>
+    <Outlet/>
+    </div>
+  );
+}
+
+export default App;
+
+---------------------------------------------------------------------
+ProductJSON.tsx
+----------------------------------------------------------------
+const data = [
+    {
+        "id": 1,
+        "title": "iPhone 9",
+        "description": "An apple mobile which is nothing like apple",
+        "price": 549,
+        "discountPercentage": 12.96,
+        "rating": 4.69,
+        "stock": 94,
+        "brand": "Apple",
+        "category": "smartphones",
+        "thumbnail": "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg",
+        "images": [
+            "https://cdn.dummyjson.com/product-images/1/1.jpg",
+            "https://cdn.dummyjson.com/product-images/1/2.jpg",
+            "https://cdn.dummyjson.com/product-images/1/3.jpg",
+            "https://cdn.dummyjson.com/product-images/1/4.jpg",
+            "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg"
+        ]
+    },
+    {
+        "id": 2,
+        "title": "iPhone X",
+        "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+        "price": 899,
+        "discountPercentage": 17.94,
+        "rating": 4.44,
+        "stock": 34,
+        "brand": "Apple",
+        "category": "smartphones",
+        "thumbnail": "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg",
+        "images": [
+            "https://cdn.dummyjson.com/product-images/2/1.jpg",
+            "https://cdn.dummyjson.com/product-images/2/2.jpg",
+            "https://cdn.dummyjson.com/product-images/2/3.jpg",
+            "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg"
+        ]
+    }
+]
+
+export default data;
+-----------------------------------------------------
+ProductDataJson.tsx
+------------------------------------------------------
+
+import { useState } from "react";
+import { ProductModel } from "./ProductModel";
+import  './ProductJSON';
+import data from "./ProductJSON";
+
+function ProductDataJson(){
+
+var [products,setProducts] = useState(data)
+
+return(
+    <div>
+        {
+            products.map((prod,idx)=>{
+                return(
+                    <div key={idx}>
+                        <h2> {prod.title}</h2>
+                        <img src={prod.thumbnail} height="100" width="100"/>
+                        <br/>
+                        Available @Rs.{prod.price} also {prod.stock} nos. available
+
+                 </div>  
+                )
+            })
+        }
+    </div>
+)
+}
+
+export default ProductDataJson;
+
+-----------------------------------------------------
+Login.tsx
+------------------------------------------------------
+
+
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+
+export default function Login(props:any){
+    const [username,setUsername] = useState("");
+    const[password,setPassword] = useState("");
+    const[users,setUsers] = useState([]);
+    const navigate = useNavigate();
+        useEffect(()=>{
+            fetch("https://mocki.io/v1/402dd6c2-5d08-44cd-921c-42c08e05e4eb")
+            .then((data)=>data.json())
+            .then((userData=>setUsers(userData)))
+        },[])
+    const checkUser=()=>{
+        var flag=false;
+        users.forEach(element => {
+            if(element["username"]==username && element["password"]==password)
+                flag=true;
+        });
+        if(flag)
+           { // props.onUserLogedIn(username);
+            alert('login sucess');
+            // navigate('/')
+            sessionStorage.setItem("un",username);
+            var route = sessionStorage.getItem("route")??"/"
+            navigate(route);
+           }
+        else
+            alert("Invalid username or password")
+    }
+    return(
+        <div>
+            <label className="form-control">Username</label>
+            <input className="form-control" type="text" onChange={(e)=>setUsername(e.target.value)}/>
+            <label className="form-control">Password</label>
+            <input className="form-control" type="password" onChange={(e)=>setPassword(e.target.value)}/>
+            <button className="btn btn-success" onClick={checkUser}>Login</button>
+        </div>
+    )
+}

@@ -1,0 +1,16 @@
+Add a component Login.
+If the user logs in check the credentials from 
+https://mocki.io/v1/402dd6c2-5d08-44cd-921c-42c08e05e4eb
+output
+[
+    {
+        "username": "ramu",
+        "password": "ramu123"
+    },
+    {
+        "username": "somu",
+        "password": "somu123"
+    }
+]
+
+If user login is success show welcome message in home component

@@ -1,0 +1,5 @@
+Create a search in todo with completed status.
+List all the to-dos first.
+Have a dropdown list that will have Completed,incomplete in the selection.
+Based on the selection change the filter the result
+You can also use radio button
